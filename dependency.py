@@ -6,7 +6,7 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 
-def setup_environment(ForceUpdateDependencies, ForceTemporaryStorage):
+def setup_environment(ModelNameRoot,ForceUpdateDependencies, ForceTemporaryStorage):
     # Mounting Google Drive
     if not ForceTemporaryStorage:
         from google.colab import drive
@@ -79,7 +79,7 @@ def setup_environment(ForceUpdateDependencies, ForceTemporaryStorage):
     if ForceTemporaryStorage:
         file_path = '/content/CachedRVC.tar.gz'
     else:
-        file_path = '/content/drive/MyDrive/RVC_Cached/CachedRVC.tar.gz'
+        file_path = f'/content/drive/MyDrive/RVC/{ModelNameRoot}/RVC_Cached/CachedRVC.tar.gz'
 
     content_file_path = '/content/CachedRVC.tar.gz'
     extract_path = '/'
@@ -142,8 +142,8 @@ def setup_environment(ForceUpdateDependencies, ForceTemporaryStorage):
                 new_tar.add(file)
                 print(f'Added to tar: {file}')
 
-        os.makedirs('/content/drive/MyDrive/RVC_Cached', exist_ok=True)
-        shutil.copy('/content/CachedRVC.tar.gz', '/content/drive/MyDrive/RVC_Cached/CachedRVC.tar.gz')
+        os.makedirs(f'/content/drive/MyDrive/RVC/{ModelNameRoot}/RVC_Cached', exist_ok=True)
+        shutil.copy('/content/CachedRVC.tar.gz', f'/content/drive/MyDrive/RVC/{ModelNameRoot}/RVC_Cached/CachedRVC.tar.gz')
         print('Updated CachedRVC.tar.gz copied to Google Drive.')
         print('Dependencies fully up to date; future runs should be faster.')
 
